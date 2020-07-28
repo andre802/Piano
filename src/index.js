@@ -1,5 +1,5 @@
 import * as Tone from 'tone';
-import { Time } from 'tone';
+import {Scale, Note} from "@tonaljs/tonal";
 
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 const octave = document.getElementsByClassName("octave")[0];
@@ -137,25 +137,63 @@ const minorChordButtons = (() => {
     const minorB = buttonFactory("minorB", minorChords.minorB);
   return { minorC, minorD, minorE, minorF, minorG, minorA, minorB };
 })();
+
 const scales = {
     pentatonicScales: {
+        chromatic: Scale.get('C chromatic')["notes"],
+        tonic: '',
+        prompt: () => {
+            // Show options, chromatic scale
+            while (true) {
+             scales.pentatonicScales.tonic = prompt("What is the tonic?");
+             if (scales.pentatonicScales.chromatic.includes(scales.pentatonicScales.tonic)) {
+                break;
+             } else {
+                 alert("Pick a note belonging to the chromatic scale")
+                 console.log(scales.pentatonicScales.chromatic);
+             }
+            }
+        },
         
-        
-        cMajor: (() => {
+        Major: (() => {
+            scales.pentatonicScales.prompt();
+            const notes = Scale.get(`${scales.pentatonicScales.tonic}4 pentatonic`)["notes"];
+            notes.push(`${scales.pentatonicScales.tonic}` + '5');
+            console.log(notes);
             const pattern = new Tone.Pattern((time,note) => {
+                // make into function with switch case
+                if (note.includes('b')) {
+                    note = Note.enharmonic(note);
+                }
+                if (note.includes('E#')) {
+                    note = 'F' + note.substring(note.length - 1);
+                }
+                if (note.includes('##')) {
+                    note = Note.enharmonic(note);
+                }
+                if (note.includes('B#')) {
+                    note = Note.enharmonic(note);
+                }
                 trigger(document.getElementById(note),500);
                 synth.triggerAttackRelease(note,.25);
-            }, ["C4", "D4", "E4", "G4", "A4", "C5"]); 
+            }, notes); 
             pattern.start()
             pattern.iterations = 6;
             
          
         }),
-        cMinor: (() => {
+        Minor: (() => {
+            scales.pentatonicScales.prompt();
+            const notes = Scale.get(`${scales.pentatonicScales.tonic}4 minor pentatonic`)["notes"];
+            notes.push(`${scales.pentatonicScales.tonic}` + '5');
+            console.log(notes);
             const pattern = new Tone.Pattern((time, note) => {
+                if (note.includes('b')) {
+                    note = Note.enharmonic(note);
+                }
                 trigger(document.getElementById(note),500);
                 synth.triggerAttackRelease(note,.25);
-            }, ["C4", "D#4", "F4", "G4", "A#4", "C5"] );
+            }, notes );
             pattern.start();
             pattern.iterations = 6; 
             
@@ -166,10 +204,10 @@ const scales = {
 const majorBtn = document.getElementById('majorP');
 majorBtn.addEventListener("click", () => {
     Tone.Transport.start();
-    scales.pentatonicScales.cMajor();
+    scales.pentatonicScales.Major();
 })
 const minorBtn = document.getElementById('minorP');
 minorBtn.addEventListener("click", () => {
     Tone.Transport.start();
-    scales.pentatonicScales.cMinor();
+    scales.pentatonicScales.Minor();
 })
