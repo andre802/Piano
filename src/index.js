@@ -1,5 +1,7 @@
 import * as Tone from 'tone';
-const synth = new Tone.Synth().toDestination();
+import { Time } from 'tone';
+
+const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 const octave = document.getElementsByClassName("octave")[0];
 const keys = {
   a: "C4",  
@@ -44,7 +46,7 @@ for (let i = 0; i < octave.children.length; i++) {
 window.addEventListener("keypress", (e) => {
   if (e.key in keys) {
     const synth = new Tone.Synth().toDestination();
-    synth.triggerAttackRelease(keys[e.key], "8n");
+    synth.triggerAttackRelease(keys[e.key])
     let key = document.getElementById(keys[e.key]);
     key.style.background = "gray";
     setTimeout(() => {
@@ -78,7 +80,7 @@ const chordFactory = (a, b, c) => {
     synth.triggerAttack(a, now);
     synth.triggerAttack(b, now + 0.5);
     synth.triggerAttack(c, now + 1);
-    synth.triggerRelease(now + 2);
+    synth.triggerRelease([a,b,c],now + 2);
   };
   return { chord };
 };
@@ -134,3 +136,24 @@ const minorChordButtons = (() => {
     const minorB = buttonFactory("minorB", minorChords.minorB);
   return { minorC, minorD, minorE, minorF, minorG, minorA, minorB };
 })();
+
+const scales = {
+    pentatonicScales: {
+        
+        
+        cMajor: () => {
+            const pattern = new Tone.Pattern((time,note) => {
+                synth.triggerAttackRelease(note,"8n");
+            }, ["C4", "D4", "E4", "G4", "A4"]); 
+            pattern.start(0);
+            pattern.stop("2.25s");
+            return pattern;            
+        }
+    }
+}
+const majorBtn = document.getElementById('majorP');
+majorBtn.addEventListener("click", () => {
+    Tone.Transport.stop();
+    const pattern = scales.pentatonicScales.cMajor();
+    Tone.Transport.start();
+})
