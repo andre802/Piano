@@ -55,13 +55,13 @@ body {
     margin-left: 10%;
   }
   .majorChords button,
-  .minorChords button 
+  .minorChords button, 
   .pentatonicScales button {
     height: 25px;
     margin-bottom: 5px;
   }
   .majorChords span,
-  .minorChords span
+  .minorChords span,
   .pentatonicScales span {
     font-size: 1.5em;
     margin-bottom: 5px;

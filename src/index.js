@@ -45,8 +45,7 @@ for (let i = 0; i < octave.children.length; i++) {
 }
 window.addEventListener("keypress", (e) => {
   if (e.key in keys) {
-    const synth = new Tone.Synth().toDestination();
-    synth.triggerAttackRelease(keys[e.key])
+    synth.triggerAttackRelease(keys[e.key], "8n");
     let key = document.getElementById(keys[e.key]);
     key.style.background = "gray";
     setTimeout(() => {
@@ -60,7 +59,8 @@ window.addEventListener("keypress", (e) => {
 });
 
 const trigger = (...el) => {
-  el.forEach((e) => {
+    let e = el[0];
+  
     e.style.background = "gray";
     setTimeout(() => {
       if (e.classList.contains("w")) {
@@ -68,18 +68,19 @@ const trigger = (...el) => {
       } else {
         e.style.background = "black";
       }
-    }, 1500);
-  });
+    }, el[el.length - 1]);
+  
 };
 const chordFactory = (a, b, c) => {
   const chord = () => {
-    trigger(document.getElementById(a));
-    setTimeout(() => trigger(document.getElementById(b)), 500);
-    setTimeout(() => trigger(document.getElementById(c)), 1000);
+   
     const now = Tone.now();
     synth.triggerAttack(a, now);
     synth.triggerAttack(b, now + 0.5);
     synth.triggerAttack(c, now + 1);
+    trigger(document.getElementById(a),2000);
+    setTimeout(() => trigger(document.getElementById(b),1500), 500);
+    setTimeout(() => trigger(document.getElementById(c),1000), 1000);
     synth.triggerRelease([a,b,c],now + 2);
   };
   return { chord };
@@ -136,24 +137,39 @@ const minorChordButtons = (() => {
     const minorB = buttonFactory("minorB", minorChords.minorB);
   return { minorC, minorD, minorE, minorF, minorG, minorA, minorB };
 })();
-
 const scales = {
     pentatonicScales: {
         
         
-        cMajor: () => {
+        cMajor: (() => {
             const pattern = new Tone.Pattern((time,note) => {
-                synth.triggerAttackRelease(note,"8n");
-            }, ["C4", "D4", "E4", "G4", "A4"]); 
-            pattern.start(0);
-            pattern.stop("2.25s");
-            return pattern;            
-        }
+                trigger(document.getElementById(note),500);
+                synth.triggerAttackRelease(note,.25);
+            }, ["C4", "D4", "E4", "G4", "A4", "C5"]); 
+            pattern.start()
+            pattern.iterations = 6;
+            
+         
+        }),
+        cMinor: (() => {
+            const pattern = new Tone.Pattern((time, note) => {
+                trigger(document.getElementById(note),500);
+                synth.triggerAttackRelease(note,.25);
+            }, ["C4", "D#4", "F4", "G4", "A#4", "C5"] );
+            pattern.start();
+            pattern.iterations = 6; 
+            
+        })
     }
 }
+
 const majorBtn = document.getElementById('majorP');
 majorBtn.addEventListener("click", () => {
-    Tone.Transport.stop();
-    const pattern = scales.pentatonicScales.cMajor();
     Tone.Transport.start();
+    scales.pentatonicScales.cMajor();
+})
+const minorBtn = document.getElementById('minorP');
+minorBtn.addEventListener("click", () => {
+    Tone.Transport.start();
+    scales.pentatonicScales.cMinor();
 })
