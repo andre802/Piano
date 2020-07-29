@@ -27,7 +27,8 @@ const keys = {
   F: "G#5",
   v: "A5",
   G: "A#5",
-  b: "B5"
+  b: "B5",
+  n: "C6"
 };
 for (let i = 0; i < octave.children.length; i++) {
   octave.children[i].addEventListener("click", (e) => {
@@ -94,59 +95,108 @@ const buttonFactory = (btnId, chord) => {
 
 const majorChords = (() => {
   const majorC = chordFactory("C4", "E4", "G4").chord;
+  const majorCs = chordFactory("C#4", "F4", "G#4").chord;
   const majorD = chordFactory("D4", "F#4", "A4").chord;
+  const majorDs = chordFactory("D#4", "G4", "A#4").chord;
   const majorE = chordFactory("E4", "G#4", "B4").chord;
   const majorF = chordFactory("F4", "A4", "C5").chord;
+  const majorFs = chordFactory("F#4", "A#4", "C#5").chord
   const majorG = chordFactory("G4", "B4", "D5").chord;
+  const majorGs = chordFactory("G#4", "C5", "D#5").chord;
   const majorA = chordFactory("A4", "C#5", "E5").chord;
+  const majorAs = chordFactory("A#4", "D5", "F5").chord;
   const majorB = chordFactory("B4", "D#5", "F#5").chord;
 
-  return { majorC, majorD, majorE, majorF, majorG, majorA, majorB };
+  return { majorC, majorCs, majorD, majorDs, majorE, majorF, majorFs, majorG, majorGs, majorA, majorAs, majorB };
 })();
 
 
 const majorChordButtons = (() => {
     const majorC = buttonFactory("majorC", majorChords.majorC);
+    const majorCs = buttonFactory("majorCs", majorChords.majorCs);
     const majorD = buttonFactory("majorD", majorChords.majorD);
+    const majorDs = buttonFactory("majorDs", majorChords.majorDs);
     const majorE = buttonFactory("majorE", majorChords.majorE);
     const majorF = buttonFactory("majorF", majorChords.majorF);
+    const majorFs = buttonFactory("majorFs", majorChords.majorFs);
     const majorG = buttonFactory("majorG", majorChords.majorG);
+    const majorGs = buttonFactory("majorGs", majorChords.majorGs);
     const majorA = buttonFactory("majorA", majorChords.majorA);
+    const majorAs = buttonFactory("majorAs", majorChords.majorAs);
     const majorB = buttonFactory("majorB", majorChords.majorB);
-  return { majorC, majorD, majorE, majorF, majorG, majorA, majorB };
+  return { majorC, majorCs, majorD, majorDs, majorE, majorF, majorFs, majorG, majorGs, majorA, majorAs, majorB };
 })();
 
 const minorChords = (() => {
   const minorC = chordFactory("C4", "D#4", "G4").chord;
+  const minorCs = chordFactory("C#4", "E4", "G#4").chord;
   const minorD = chordFactory("D4", "F4", "A4").chord;
+  const minorDs = chordFactory("D#4", "F#4", "A#4").chord;
   const minorE = chordFactory("E4", "G4", "B4").chord;
   const minorF = chordFactory("F4", "G#4", "C5").chord;
+  const minorFs = chordFactory("F#4", "A4", "C#5").chord
   const minorG = chordFactory("G4", "A#4", "D5").chord;
+  const minorGs = chordFactory("G#4", "B4", "D#5").chord;
   const minorA = chordFactory("A4", "C5", "E5").chord;
+  const minorAs = chordFactory("A#4", "C5", "F5").chord;
   const minorB = chordFactory("B4", "D5", "F#5").chord;
-  return { minorC, minorD, minorE, minorF, minorG, minorA, minorB };
+  return { minorC, minorCs, minorD, minorDs, minorE, minorF, minorFs, minorG, minorGs, minorA, minorAs, minorB };
 })();
 
 const minorChordButtons = (() => {
     const minorC = buttonFactory("minorC", minorChords.minorC);
+    const minorCs = buttonFactory("minorCs", minorChords.minorCs);
     const minorD = buttonFactory("minorD", minorChords.minorD);
+    const minorDs = buttonFactory("minorDs", minorChords.minorDs);
     const minorE = buttonFactory("minorE", minorChords.minorE);
     const minorF = buttonFactory("minorF", minorChords.minorF);
+    const minorFs = buttonFactory("minorFs", minorChords.minorFs);
     const minorG = buttonFactory("minorG", minorChords.minorG);
+    const minorGs = buttonFactory("minorGs", minorChords.minorGs);
     const minorA = buttonFactory("minorA", minorChords.minorA);
+    const minorAs = buttonFactory("minorAs", minorChords.minorAs);
     const minorB = buttonFactory("minorB", minorChords.minorB);
-  return { minorC, minorD, minorE, minorF, minorG, minorA, minorB };
+  return { minorC, minorCs, minorD, minorDs, minorE, minorF, minorFs, minorG, minorGs, minorA, minorAs, minorB };
 })();
 
 const scales = {
+    chromatic: ['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','Bb','B'],
+    enharmonic: (note) => {
+        const toChange = ['b', 'E#', '##', 'B#'];
+        toChange.forEach((value) => {
+            if (note.includes(value)) {
+                note = Note.enharmonic(note);
+                return note;
+            }
+        })
+        return note;
+    },
+    hepatonicScales: {
+        pattern: () => {
+
+        },
+        prompt: () => {
+
+        },
+    },
     pentatonicScales: {
-        chromatic: Scale.get('C chromatic')["notes"],
+        pattern: (type) => {
+            const notes = Scale.get(`${scales.pentatonicScales.tonic}4 ${type}`)['notes'];
+            notes.push(`${scales.pentatonicScales.tonic}5`);
+            const pattern = new Tone.Pattern((time, note) => {
+                note = scales.enharmonic(note);
+                trigger(document.getElementById(note),500);
+                synth.triggerAttackRelease(note,.25);
+            }, notes );
+            pattern.start();
+            pattern.iterations = 6; 
+        },
         tonic: '',
         prompt: () => {
-            // Show options, chromatic scale
             while (true) {
-             scales.pentatonicScales.tonic = prompt("What is the tonic?");
-             if (scales.pentatonicScales.chromatic.includes(scales.pentatonicScales.tonic)) {
+            let options = scales.chromatic.join(', ');
+             scales.pentatonicScales.tonic = prompt(`${options}\nWhat is the tonic?`);
+             if (scales.chromatic.includes(scales.pentatonicScales.tonic)) {
                 break;
              } else {
                  alert("Pick a note belonging to the chromatic scale")
@@ -157,57 +207,74 @@ const scales = {
         
         Major: (() => {
             scales.pentatonicScales.prompt();
-            const notes = Scale.get(`${scales.pentatonicScales.tonic}4 pentatonic`)["notes"];
-            notes.push(`${scales.pentatonicScales.tonic}` + '5');
-            console.log(notes);
-            const pattern = new Tone.Pattern((time,note) => {
-                // make into function with switch case
-                if (note.includes('b')) {
-                    note = Note.enharmonic(note);
-                }
-                if (note.includes('E#')) {
-                    note = 'F' + note.substring(note.length - 1);
-                }
-                if (note.includes('##')) {
-                    note = Note.enharmonic(note);
-                }
-                if (note.includes('B#')) {
-                    note = Note.enharmonic(note);
-                }
-                trigger(document.getElementById(note),500);
-                synth.triggerAttackRelease(note,.25);
-            }, notes); 
-            pattern.start()
-            pattern.iterations = 6;
-            
-         
+            scales.pentatonicScales.pattern("pentatonic");
         }),
         Minor: (() => {
             scales.pentatonicScales.prompt();
-            const notes = Scale.get(`${scales.pentatonicScales.tonic}4 minor pentatonic`)["notes"];
-            notes.push(`${scales.pentatonicScales.tonic}` + '5');
-            console.log(notes);
-            const pattern = new Tone.Pattern((time, note) => {
-                if (note.includes('b')) {
-                    note = Note.enharmonic(note);
-                }
-                trigger(document.getElementById(note),500);
-                synth.triggerAttackRelease(note,.25);
-            }, notes );
-            pattern.start();
-            pattern.iterations = 6; 
-            
+            scales.pentatonicScales.pattern("minor pentatonic");
+        }),
+        Egyptian: (() => {
+            scales.pentatonicScales.prompt();
+            scales.pentatonicScales.pattern("egyptian")
+        }),
+        Indian: (() => {
+            scales.pentatonicScales.prompt();
+            scales.pentatonicScales.pattern("mixolydian pentatonic")
+        }),
+        Ritusen:(() => {
+            scales.pentatonicScales.prompt();
+            scales.pentatonicScales.pattern("ritusen")
+        }),
+        Ionian:(() => {
+            scales.pentatonicScales.prompt();
+            scales.pentatonicScales.pattern("ionian pentatonic");
         })
+        
+    },
+}
+const buttons = {
+    pentatonic: {
+        majorBtn: (() => {
+            const btn = document.getElementById('majorP');
+            btn.addEventListener("click", () => {
+                Tone.Transport.start();
+                scales.pentatonicScales.Major();
+            })
+        })(),
+        minorBtn: (() => {
+            const btn = document.getElementById('minorP');
+            btn.addEventListener("click", () => {
+                Tone.Transport.start();
+                scales.pentatonicScales.Minor();
+            })
+        })(),
+        egyptian: (() => {
+            const btn = document.getElementById('egyptian');
+            btn.addEventListener("click", () => {
+                Tone.Transport.start();
+                scales.pentatonicScales.Egyptian();
+            })
+        })(),
+        indian: (() => {
+            const btn = document.getElementById('indian');
+            btn.addEventListener("click", () => {
+                Tone.Transport.start();
+                scales.pentatonicScales.Indian();
+            })
+        })(),
+        ritusen: (() => {
+            const btn = document.getElementById('ritusen');
+            btn.addEventListener("click", () => {
+                Tone.Transport.start();
+                scales.pentatonicScales.Ritusen();
+            })
+        })(),
+        ionian: (() => {
+            const btn = document.getElementById("ionian");
+            btn.addEventListener("click", () => {
+                Tone.Transport.start();
+                scales.pentatonicScales.Ionian();
+            })
+        })()
     }
 }
-
-const majorBtn = document.getElementById('majorP');
-majorBtn.addEventListener("click", () => {
-    Tone.Transport.start();
-    scales.pentatonicScales.Major();
-})
-const minorBtn = document.getElementById('minorP');
-minorBtn.addEventListener("click", () => {
-    Tone.Transport.start();
-    scales.pentatonicScales.Minor();
-})

@@ -1,0 +1,5 @@
+TODO:
+-Show note names of the scale being played
+-Make page responsive
+Done:
+-Add sharp and flats for chords

@@ -51,14 +51,16 @@ body {
     flex-direction: column;
     text-align: center;
     justify-content: center;
-    width: 15%;
-    margin-left: 10%;
+    align-items: center;
+    width: 30%;
+    margin: 0 auto;
   }
   .majorChords button,
   .minorChords button, 
   .pentatonicScales button {
-    height: 25px;
+    height: fit-content;
     margin-bottom: 5px;
+    width: fit-content;
   }
   .majorChords span,
   .minorChords span,
@@ -66,11 +68,24 @@ body {
     font-size: 1.5em;
     margin-bottom: 5px;
   }
-  
+  .buttons {
+    display: flex;
+    
+  }
+  .naturals, .sharpsFlats {
+    display: flex;
+    flex-direction: column;
+  }
+ .naturals {
+   margin-right: 10px;
+ } 
   @media (max-width: 1000px) {
     section {
       display: none;
     }
     /* TODO: add higher and lower octave sections to have no display until a request */
   }
+  @media (max-width: 400px) {
+    
+  }   
   
