@@ -1,5 +1,7 @@
 TODO:
 -Show note names of the scale being played
--Make page responsive
+-split Javascript into modules
+-Move pattern function up in hiearchy, making a function of the scales object with type and number of iterations as args
 Done:
 -Add sharp and flats for chords
+-Make page responsive

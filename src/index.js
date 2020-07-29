@@ -138,7 +138,7 @@ const minorChords = (() => {
   const minorG = chordFactory("G4", "A#4", "D5").chord;
   const minorGs = chordFactory("G#4", "B4", "D#5").chord;
   const minorA = chordFactory("A4", "C5", "E5").chord;
-  const minorAs = chordFactory("A#4", "C5", "F5").chord;
+  const minorAs = chordFactory("A#4", "C#5", "F5").chord;
   const minorB = chordFactory("B4", "D5", "F#5").chord;
   return { minorC, minorCs, minorD, minorDs, minorE, minorF, minorFs, minorG, minorGs, minorA, minorAs, minorB };
 })();
@@ -160,6 +160,20 @@ const minorChordButtons = (() => {
 })();
 
 const scales = {
+    tonic: '',
+    prompt: () => {
+        while (true) {
+        let options = scales.chromatic.join(', ');
+         scales.tonic = prompt(`${options}\nWhat is the tonic?`);
+         if (scales.chromatic.includes(scales.tonic)) {
+            break;
+         } else {
+             alert("Pick a note belonging to the chromatic scale");
+             break;
+         }
+        }
+    
+    },
     chromatic: ['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','Bb','B'],
     enharmonic: (note) => {
         const toChange = ['b', 'E#', '##', 'B#'];
@@ -172,17 +186,54 @@ const scales = {
         return note;
     },
     hepatonicScales: {
-        pattern: () => {
-
+        pattern: (type) => {
+            const notes = Scale.get(`${scales.tonic}4 ${type}`)['notes'];
+            notes.push(`${scales.tonic}5`);
+            const pattern = new Tone.Pattern((time, note) => {
+                note = scales.enharmonic(note);
+                trigger(document.getElementById(note),500);
+                synth.triggerAttackRelease(note,.25);
+            }, notes );
+            pattern.start();
+            pattern.iterations = 8; 
         },
         prompt: () => {
-
+                while (true) {
+                let options = scales.chromatic.join(', ');
+                 scales.tonic = prompt(`${options}\nWhat is the tonic?`);
+                 if (scales.chromatic.includes(scales.tonic)) {
+                    break;
+                 } else {
+                     alert("Pick a note belonging to the chromatic scale");
+                     continue;
+                 }
+                }
+            
         },
+        Major: (() => {
+            scales.prompt();
+            scales.hepatonicScales.pattern("major");
+        }),
+        Minor: (() => {
+
+        }),
+        Harmonic: (() => {
+
+        }),
+        Melodic: (() => {
+
+        }),
+        Dorian: (() => {
+
+        }),
+        Arabian: (() => {
+
+        })
     },
     pentatonicScales: {
         pattern: (type) => {
-            const notes = Scale.get(`${scales.pentatonicScales.tonic}4 ${type}`)['notes'];
-            notes.push(`${scales.pentatonicScales.tonic}5`);
+            const notes = Scale.get(`${scales.tonic}4 ${type}`)['notes'];
+            notes.push(`${scales.tonic}5`);
             const pattern = new Tone.Pattern((time, note) => {
                 note = scales.enharmonic(note);
                 trigger(document.getElementById(note),500);
@@ -191,18 +242,17 @@ const scales = {
             pattern.start();
             pattern.iterations = 6; 
         },
-        tonic: '',
         prompt: () => {
             while (true) {
-            let options = scales.chromatic.join(', ');
-             scales.pentatonicScales.tonic = prompt(`${options}\nWhat is the tonic?`);
-             if (scales.chromatic.includes(scales.pentatonicScales.tonic)) {
-                break;
-             } else {
-                 alert("Pick a note belonging to the chromatic scale")
-                 console.log(scales.pentatonicScales.chromatic);
-             }
-            }
+                let options = scales.chromatic.join(', ');
+                 scales.tonic = prompt(`${options}\nWhat is the tonic?`);
+                 if (scales.chromatic.includes(scales.tonic)) {
+                    break;
+                 } else {
+                     alert("Pick a note belonging to the chromatic scale");
+                     continue;
+                 }
+                }
         },
         
         Major: (() => {
@@ -233,6 +283,30 @@ const scales = {
     },
 }
 const buttons = {
+    hepatonic: {
+        majorBtn: (() => {
+            const btn = document.getElementById("majorH");
+            btn.addEventListener("click", () => {
+                Tone.Transport.start();
+                scales.hepatonicScales.Major();
+            })
+        })(),
+        minorBtn: (() => {
+
+        })(),
+        harmonicMinorBtn: (() => {
+
+        })(),
+        melodicMinorBtn: (() => {
+
+        })(),
+        dorian: (() => {
+
+        })(),
+        arabian: (() => {
+
+        })
+    },
     pentatonic: {
         majorBtn: (() => {
             const btn = document.getElementById('majorP');
