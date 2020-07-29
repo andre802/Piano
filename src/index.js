@@ -1,7 +1,8 @@
 import * as Tone from 'tone';
 import {
     Scale,
-    Note
+    Note,
+    Chord
 } from "@tonaljs/tonal";
 
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
@@ -86,125 +87,16 @@ const buttonFactory = (btnId, chord) => {
     const button = document.getElementById(btnId);
     button.addEventListener("click", () => chord());
 }
-
-const majorChords = (() => {
-    const majorC = chordFactory("C4", "E4", "G4").chord;
-    const majorCs = chordFactory("C#4", "F4", "G#4").chord;
-    const majorD = chordFactory("D4", "F#4", "A4").chord;
-    const majorDs = chordFactory("D#4", "G4", "A#4").chord;
-    const majorE = chordFactory("E4", "G#4", "B4").chord;
-    const majorF = chordFactory("F4", "A4", "C5").chord;
-    const majorFs = chordFactory("F#4", "A#4", "C#5").chord
-    const majorG = chordFactory("G4", "B4", "D5").chord;
-    const majorGs = chordFactory("G#4", "C5", "D#5").chord;
-    const majorA = chordFactory("A4", "C#5", "E5").chord;
-    const majorAs = chordFactory("A#4", "D5", "F5").chord;
-    const majorB = chordFactory("B4", "D#5", "F#5").chord;
-
-    return {
-        majorC,
-        majorCs,
-        majorD,
-        majorDs,
-        majorE,
-        majorF,
-        majorFs,
-        majorG,
-        majorGs,
-        majorA,
-        majorAs,
-        majorB
-    };
-})();
-
-
-const majorChordButtons = (() => {
-    const majorC = buttonFactory("majorC", majorChords.majorC);
-    const majorCs = buttonFactory("majorCs", majorChords.majorCs);
-    const majorD = buttonFactory("majorD", majorChords.majorD);
-    const majorDs = buttonFactory("majorDs", majorChords.majorDs);
-    const majorE = buttonFactory("majorE", majorChords.majorE);
-    const majorF = buttonFactory("majorF", majorChords.majorF);
-    const majorFs = buttonFactory("majorFs", majorChords.majorFs);
-    const majorG = buttonFactory("majorG", majorChords.majorG);
-    const majorGs = buttonFactory("majorGs", majorChords.majorGs);
-    const majorA = buttonFactory("majorA", majorChords.majorA);
-    const majorAs = buttonFactory("majorAs", majorChords.majorAs);
-    const majorB = buttonFactory("majorB", majorChords.majorB);
-    return {
-        majorC,
-        majorCs,
-        majorD,
-        majorDs,
-        majorE,
-        majorF,
-        majorFs,
-        majorG,
-        majorGs,
-        majorA,
-        majorAs,
-        majorB
-    };
-})();
-
-const minorChords = (() => {
-    const minorC = chordFactory("C4", "D#4", "G4").chord;
-    const minorCs = chordFactory("C#4", "E4", "G#4").chord;
-    const minorD = chordFactory("D4", "F4", "A4").chord;
-    const minorDs = chordFactory("D#4", "F#4", "A#4").chord;
-    const minorE = chordFactory("E4", "G4", "B4").chord;
-    const minorF = chordFactory("F4", "G#4", "C5").chord;
-    const minorFs = chordFactory("F#4", "A4", "C#5").chord
-    const minorG = chordFactory("G4", "A#4", "D5").chord;
-    const minorGs = chordFactory("G#4", "B4", "D#5").chord;
-    const minorA = chordFactory("A4", "C5", "E5").chord;
-    const minorAs = chordFactory("A#4", "C#5", "F5").chord;
-    const minorB = chordFactory("B4", "D5", "F#5").chord;
-    return {
-        minorC,
-        minorCs,
-        minorD,
-        minorDs,
-        minorE,
-        minorF,
-        minorFs,
-        minorG,
-        minorGs,
-        minorA,
-        minorAs,
-        minorB
-    };
-})();
-
-const minorChordButtons = (() => {
-    const minorC = buttonFactory("minorC", minorChords.minorC);
-    const minorCs = buttonFactory("minorCs", minorChords.minorCs);
-    const minorD = buttonFactory("minorD", minorChords.minorD);
-    const minorDs = buttonFactory("minorDs", minorChords.minorDs);
-    const minorE = buttonFactory("minorE", minorChords.minorE);
-    const minorF = buttonFactory("minorF", minorChords.minorF);
-    const minorFs = buttonFactory("minorFs", minorChords.minorFs);
-    const minorG = buttonFactory("minorG", minorChords.minorG);
-    const minorGs = buttonFactory("minorGs", minorChords.minorGs);
-    const minorA = buttonFactory("minorA", minorChords.minorA);
-    const minorAs = buttonFactory("minorAs", minorChords.minorAs);
-    const minorB = buttonFactory("minorB", minorChords.minorB);
-    return {
-        minorC,
-        minorCs,
-        minorD,
-        minorDs,
-        minorE,
-        minorF,
-        minorFs,
-        minorG,
-        minorGs,
-        minorA,
-        minorAs,
-        minorB
-    };
-})();
-
+const enharmonic = (note) => {
+    const toChange = ['b', 'E#', '##', 'B#'];
+    toChange.forEach((value) => {
+        if (note.includes(value)) {
+            note = Note.enharmonic(note);
+            return note;
+        }
+    })
+    return note;
+}
 const scales = {
     tonic: '',
     pattern: (type, iterations) => {
@@ -296,6 +188,138 @@ const scales = {
         }
     },
 }
+const majorChords = (() => {
+
+    const chromatic = ['C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4'];
+    const chords = [];
+    chromatic.forEach((root) => {
+        chords.push(Chord.getChord("major", root)["notes"].map((el) => enharmonic(el)));
+    })
+
+    const majorC = chordFactory(...chords[0]).chord;
+    const majorCs = chordFactory(...chords[1]).chord;
+    const majorD = chordFactory(...chords[2]).chord;
+    const majorDs = chordFactory(...chords[3]).chord;
+    const majorE = chordFactory(...chords[4]).chord;
+    const majorF = chordFactory(...chords[5]).chord;
+    const majorFs = chordFactory(...chords[6]).chord
+    const majorG = chordFactory(...chords[7]).chord;
+    const majorGs = chordFactory(...chords[8]).chord;
+    const majorA = chordFactory(...chords[9]).chord;
+    const majorAs = chordFactory(...chords[10]).chord;
+    const majorB = chordFactory(...chords[11]).chord;
+
+    return {
+        majorC,
+        majorCs,
+        majorD,
+        majorDs,
+        majorE,
+        majorF,
+        majorFs,
+        majorG,
+        majorGs,
+        majorA,
+        majorAs,
+        majorB
+    };
+})();
+
+
+const majorChordButtons = (() => {
+    const majorC = buttonFactory("majorC", majorChords.majorC);
+    const majorCs = buttonFactory("majorCs", majorChords.majorCs);
+    const majorD = buttonFactory("majorD", majorChords.majorD);
+    const majorDs = buttonFactory("majorDs", majorChords.majorDs);
+    const majorE = buttonFactory("majorE", majorChords.majorE);
+    const majorF = buttonFactory("majorF", majorChords.majorF);
+    const majorFs = buttonFactory("majorFs", majorChords.majorFs);
+    const majorG = buttonFactory("majorG", majorChords.majorG);
+    const majorGs = buttonFactory("majorGs", majorChords.majorGs);
+    const majorA = buttonFactory("majorA", majorChords.majorA);
+    const majorAs = buttonFactory("majorAs", majorChords.majorAs);
+    const majorB = buttonFactory("majorB", majorChords.majorB);
+    return {
+        majorC,
+        majorCs,
+        majorD,
+        majorDs,
+        majorE,
+        majorF,
+        majorFs,
+        majorG,
+        majorGs,
+        majorA,
+        majorAs,
+        majorB
+    };
+})();
+
+const minorChords = (() => {
+    const chromatic = ['C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4'];
+    const chords = [];
+    chromatic.forEach((root) => {
+        chords.push(Chord.getChord("minor", root)["notes"].map((el) => enharmonic(el)));
+    
+    })
+    const minorC = chordFactory(...chords[0]).chord;
+    const minorCs = chordFactory(...chords[1]).chord;
+    const minorD = chordFactory(...chords[2]).chord;
+    const minorDs = chordFactory(...chords[3]).chord;
+    const minorE = chordFactory(...chords[4]).chord;
+    const minorF = chordFactory(...chords[5]).chord;
+    const minorFs = chordFactory(...chords[6]).chord
+    const minorG = chordFactory(...chords[7]).chord;
+    const minorGs = chordFactory(...chords[8]).chord;
+    const minorA = chordFactory(...chords[9]).chord;
+    const minorAs = chordFactory(...chords[10]).chord;
+    const minorB = chordFactory(...chords[11]).chord;
+    return {
+        minorC,
+        minorCs,
+        minorD,
+        minorDs,
+        minorE,
+        minorF,
+        minorFs,
+        minorG,
+        minorGs,
+        minorA,
+        minorAs,
+        minorB
+    };
+})();
+
+const minorChordButtons = (() => {
+    const minorC = buttonFactory("minorC", minorChords.minorC);
+    const minorCs = buttonFactory("minorCs", minorChords.minorCs);
+    const minorD = buttonFactory("minorD", minorChords.minorD);
+    const minorDs = buttonFactory("minorDs", minorChords.minorDs);
+    const minorE = buttonFactory("minorE", minorChords.minorE);
+    const minorF = buttonFactory("minorF", minorChords.minorF);
+    const minorFs = buttonFactory("minorFs", minorChords.minorFs);
+    const minorG = buttonFactory("minorG", minorChords.minorG);
+    const minorGs = buttonFactory("minorGs", minorChords.minorGs);
+    const minorA = buttonFactory("minorA", minorChords.minorA);
+    const minorAs = buttonFactory("minorAs", minorChords.minorAs);
+    const minorB = buttonFactory("minorB", minorChords.minorB);
+    return {
+        minorC,
+        minorCs,
+        minorD,
+        minorDs,
+        minorE,
+        minorF,
+        minorFs,
+        minorG,
+        minorGs,
+        minorA,
+        minorAs,
+        minorB
+    };
+})();
+
+
 const buttons = {
     hepatonic: (() => {
         buttonFactory("majorH", scales.hepatonicScales.Major);

@@ -6,8 +6,11 @@ TODO:
 -generate HTML dynamically
 -show modal demonstrating how keyboard equates to piano keys
 -add 7ths
+-modes 
 -add title attributes to buttons
 -add comments
+-chord progressions
+-roman numeral use
 
 DONE:
 -Add sharp and flats for chords
