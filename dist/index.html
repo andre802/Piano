@@ -1,55 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../src/style.css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../src/style.css">
+  <title>Synth</title>
 </head>
+
 <body>
-    <ul class="octave">
-        <li id="C4" class="w c"></li>
-       <li id="C#4" class="b cs"></li>
-       <li id="D4" class="w d"></li>
-       <li id="D#4" class="b ds"></li>
-       <li id="E4" class="w e"></li>
-       <li id="F4" class="w f"></li>
-       <li id="F#4" class="b fs"></li>
-       <li id="G4" class="w g"></li>
-       <li id="G#4" class="b gs"></li>
-       <li id="A4" class="w a"></li>
-       <li id="A#4" class="b as"></li>
-       <li id="B4" class="w bn"></li>
-       <li id="C5" class="w c"></li>
-       <section>
-       <li id="C#5" class="b cs"></li>
-       <li id="D5" class="w d"></li>
-       <li id="D#5" class="b ds"></li>
-       <li id="E5" class="w e"></li>
-       <li id="F5" class="w f"></li>
-       <li id="F#5" class="b fs"></li>
-       <li id="G5" class="w g"></li>
-       <li id="G#5" class="b gs"></li>
-       <li id="A5" class="w a"></li>
-       <li id="A#5" class="b as"></li>
-       <li id="B5" class="w bn"></li>
-       <li id="C6" class="w c"></li>
-       </section>
-     
-     </ul>
-     
-     <div class="chords">
-       <div class="majorChords">
-         <span>Major Chords</span>
-         <div class="buttons">
-         <span class="naturals">
-         <button id="majorC">C Major</button>
-         <button id="majorD">D Major</button>
-         <button id="majorE">E Major</button>
-         <button id="majorF">F Major</button>
-         <button id="majorG">G Major</button>
-         <button id="majorA">A Major</button>
-         <button id="majorB">B Major</button>
+  <ul class="octave">
+    <li id="C4" class="w c"></li>
+    <li id="C#4" class="b cs"></li>
+    <li id="D4" class="w d"></li>
+    <li id="D#4" class="b ds"></li>
+    <li id="E4" class="w e"></li>
+    <li id="F4" class="w f"></li>
+    <li id="F#4" class="b fs"></li>
+    <li id="G4" class="w g"></li>
+    <li id="G#4" class="b gs"></li>
+    <li id="A4" class="w a"></li>
+    <li id="A#4" class="b as"></li>
+    <li id="B4" class="w bn"></li>
+    <li id="C5" class="w c"></li>
+    <section>
+      <li id="C#5" class="b cs"></li>
+      <li id="D5" class="w d"></li>
+      <li id="D#5" class="b ds"></li>
+      <li id="E5" class="w e"></li>
+      <li id="F5" class="w f"></li>
+      <li id="F#5" class="b fs"></li>
+      <li id="G5" class="w g"></li>
+      <li id="G#5" class="b gs"></li>
+      <li id="A5" class="w a"></li>
+      <li id="A#5" class="b as"></li>
+      <li id="B5" class="w bn"></li>
+      <li id="C6" class="w c"></li>
+    </section>
+
+  </ul>
+
+  <div class="chords">
+    <div class="majorChords">
+      <span title="A chord that has a root, major third, and a perfect fifth.">Major Chords</span>
+      <div class="buttons">
+        <span class="naturals">
+          <button id="majorC">C Major</button>
+          <button id="majorD">D Major</button>
+          <button id="majorE">E Major</button>
+          <button id="majorF">F Major</button>
+          <button id="majorG">G Major</button>
+          <button id="majorA">A Major</button>
+          <button id="majorB">B Major</button>
         </span>
         <span class="sharpsFlats">
           <button id="majorCs">C#/Db Major</button>
@@ -58,52 +60,53 @@
           <button id="majorGs">G#/Ab Major</button>
           <button id="majorAs">A#/Bb Major</button>
         </span>
-       </div>
       </div>
-       <div class="minorChords">
-         <span>Minor Chords</span>
-         <div class="buttons">
-         <span class="naturals">
-         <button id="minorC">C Minor</button>
-         <button id="minorD">D Minor</button>
-         <button id="minorE">E Minor</button>
-         <button id="minorF">F Minor</button>
-         <button id="minorG">G Minor</button>
-         <button id="minorA">A Minor</button>
-         <button id="minorB">B Minor</button>
+    </div>
+    <div class="minorChords">
+      <span title="A chord that has a root, a minor third and a perfect fifth.">Minor Chords</span>
+      <div class="buttons">
+        <span class="naturals">
+          <button id="minorC">C Minor</button>
+          <button id="minorD">D Minor</button>
+          <button id="minorE">E Minor</button>
+          <button id="minorF">F Minor</button>
+          <button id="minorG">G Minor</button>
+          <button id="minorA">A Minor</button>
+          <button id="minorB">B Minor</button>
         </span>
-         <span class="sharpsFlats">
+        <span class="sharpsFlats">
           <button id="minorCs">C#/Db Minor</button>
           <button id="minorDs">D#/Eb Minor</button>
           <button id="minorFs">F#/Gb Minor</button>
           <button id="minorGs">G#/Ab Minor</button>
           <button id="minorAs">A#/Bb Minor</button>
         </span>
-       </div>
       </div>
-       <div class="pentatonicScales">
-          <span>Pentatonic Scales</span>
-          <div class="buttons">
-          <button id="majorP">Major</button>
-          <button id="minorP">Minor</button>
-          <button id="egyptian">Egyptian</button>
-          <button id="indian">Indian</button>
-          <button id="ritusen">Ritusen</button>
-          <button id="ionian">Ionian</button>
-       </div>
+    </div>
+    <div class="pentatonicScales">
+      <span title="5 Note Scales">Pentatonic Scales</span>
+      <div class="buttons">
+        <button id="majorP">Major</button>
+        <button id="minorP">Minor</button>
+        <button id="egyptian">Egyptian</button>
+        <button id="indian">Indian</button>
+        <button id="ritusen">Ritusen</button>
+        <button id="ionian">Ionian</button>
       </div>
-       <div class="hepatonicScales">
-         <span>Hepatonic Scales</span>
-         <div class="buttons">
-         <button id="majorH">Major</button>
-         <button id="minorH">Aeolian Minor</button>
-         <button id="hMinorH">Harmonic Minor</button>
-         <button id="melodicMinorH">Melodic Minor</button>
-         <button id="dorian">Dorian</button>
-         <button id="arabian">Arabian</button>
-       </div>
+    </div>
+    <div class="hepatonicScales">
+      <span title="7 Note Scales">Hepatonic Scales</span>
+      <div class="buttons">
+        <button id="majorH">Major</button>
+        <button id="minorH">Aeolian Minor</button>
+        <button id="hMinorH">Harmonic Minor</button>
+        <button id="melodicMinorH">Melodic Minor</button>
+        <button id="dorian">Dorian</button>
+        <button id="arabian">Arabian</button>
       </div>
-     </div>
-     <script src='../dist/main.js'></script>
+    </div>
+  </div>
+  <script src='../dist/main.js'></script>
 </body>
+
 </html>

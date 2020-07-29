@@ -1,7 +1,17 @@
 TODO:
 -Show note names of the scale being played
 -split Javascript into modules
--Move pattern function up in hiearchy, making a function of the scales object with type and number of iterations as args
-Done:
+-add styling to keys and piano (hover, press)
+-allow holding of a keyboard key simulate holding a piano key
+-generate HTML dynamically
+-show modal demonstrating how keyboard equates to piano keys
+-add 7ths
+-add title attributes to buttons
+-add comments
+
+DONE:
 -Add sharp and flats for chords
 -Make page responsive
+-Move pattern function up in hiearchy, 
+making a function of the scales object with type and
+ number of iterations as args

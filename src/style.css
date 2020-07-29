@@ -1,40 +1,164 @@
 body {
-    background-color: brown;
-    width: 100%;
-  }
-  ul {
-    width: fit-content;
-    margin: 3em auto;
-    display: flex;
-    padding: 2.5%;
-    background-color: maroon;
-    border-radius: 10px;
-  }
+  background-color: brown;
+  width: 100%;
+}
+
+ul {
+  width: fit-content;
+  margin: 3em auto;
+  display: flex;
+  padding: 2.5%;
+  background-color: maroon;
+  border-radius: 10px;
+}
+
+section {
+  display: flex;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: block;
+}
+
+.w {
+  height: 16em;
+  width: 4em;
+  border: 1px solid black;
+  z-index: 1;
+  background-color: white;
+}
+
+.b {
+  height: 9em;
+  width: 2.5em;
+  margin: 0 0 0 -1em;
+  z-index: 2;
+  border: 1px solid black;
+  background-color: black;
+}
+
+.d,
+.e,
+.g,
+.a,
+.bn {
+  margin-left: -1.75em;
+}
+
+.f,
+.c {
+  margin-left: -1px;
+}
+
+.chords {
+  display: flex;
+}
+
+.majorChords,
+.minorChords,
+.pentatonicScales,
+.hepatonicScales {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+}
+
+.pentatonicScales .buttons,
+.hepatonicScales .buttons {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.chords div span div {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: flex-start;
+  align-items: center;
+  width: 30%;
+  margin: 0 auto;
+}
+
+button {
+  height: fit-content;
+  margin: 5px;
+  width: fit-content;
+  padding: 5px 10px;
+  box-shadow: 4px 4px 4px black, -2px -2px 3px darkslategray;
+  transition: .5s all ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.15);
+  background-color: black;
+  color: white;
+
+}
+
+.chords div span {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
+
+.buttons {
+  display: flex;
+
+}
+
+.naturals,
+.sharpsFlats {
+  display: flex;
+  flex-direction: column;
+}
+
+.naturals {
+  margin-right: 10px;
+}
+
+@media (min-width: 800px) {
   section {
     display: flex;
   }
-  li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: block;
+
+  /* TODO: add higher and lower octave sections to have no display until a request */
+}
+
+@media (max-width: 600px) {
+  section {
+    display: none;
   }
-  
+
+  .chords div {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chords div span {
+    flex-wrap: wrap;
+    font-size: 1.25em;
+    ;
+    align-content: center;
+  }
+
+  ul {
+    min-width: 325px;
+    max-width: 90%;
+  }
+
   .w {
-    height: 16em;
-    width: 4em;
-    border: 1px solid black;
-    z-index: 1;
-    background-color: white;
+    width: 3.5em;
   }
+
   .b {
-    height: 9em;
-    width: 2.5em;
-    margin: 0 0 0 -1em;
-    z-index: 2;
-    border: 1px solid black;
-    background-color: black;
+    position: relative;
   }
+
   .d,
   .e,
   .g,
@@ -42,95 +166,5 @@ body {
   .bn {
     margin-left: -1.75em;
   }
-  .f, .c {
-    margin-left: -1px;
-  }
-  .chords {
-    display: flex;
-  }
-  .majorChords, .minorChords, .pentatonicScales, .hepatonicScales {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 25%; 
-  }
-  .pentatonicScales .buttons, .hepatonicScales .buttons{
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-  .chords div span div {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: flex-start;
-    align-items: center;
-    width: 30%;
-    margin: 0 auto;
-  }
-  button
-   {
-    height: fit-content;
-    margin: 5px;
-    width: fit-content;
-    padding: 5px 10px;
-    box-shadow: 4px 4px 4px black, -2px -2px 3px darkslategray;
-    transition: .5s all ease-in-out;
-  }
-  button:hover {
-    transform: scale(1.15);
-    background-color: black;
-    color: white;
 
-  }
-  .chords div span{
-    text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 5px;
-  }
-  .buttons {
-    display: flex;
-    
-  }
-  .naturals, .sharpsFlats {
-    display: flex;
-    flex-direction: column;
-  }
- .naturals {
-   margin-right: 10px;
- } 
-  @media (min-width: 800px) {
-    section {
-      display: flex;
-    }
-    /* TODO: add higher and lower octave sections to have no display until a request */
-  }
-  @media (max-width: 600px) {
-    section {
-      display: none;
-    }
-    .chords div {
-      flex-direction: column;
-      align-items: center;
-    }
-    .chords div span {
-      flex-wrap: wrap;
-      font-size: 1.25em;;
-      align-content: center;
-    }
-    ul {
-      min-width: 325px;
-      max-width: 90%;
-    }
-    .w {
-      width: 3.5em;
-    }
-    .b {
-      position: relative;
-    }
-    .d, .e, .g, .a, .bn {
-      margin-left: -1.75em;
-    }
-    
-  }   
-  
+}
