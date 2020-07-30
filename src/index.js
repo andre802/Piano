@@ -2,7 +2,9 @@ import * as Tone from 'tone';
 import {
     Scale,
     Note,
-    Chord
+    Chord,
+    RomanNumeral,
+    Tonal
 } from "@tonaljs/tonal";
 
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
@@ -57,14 +59,15 @@ window.addEventListener("keyup", (e) => {
 */
 const trigger = (...el) => {
     let e = el[0];
-    e.style.background = "gray";
+    // not working consistently with chord progressions
+    e.style.background = "#DBD4D2";
     setTimeout(() => {
         if (e.classList.contains("w")) {
-            e.style.background = "white";
+            e.style.background = "linear-gradient(#E8F1F2, #FFFFFD)"
         } else {
             e.style.background = "black";
         }
-    }, el[el.length - 1]);
+    }, el[el.length - 1] - 100);
 
 };
 const chordFactory = (a, b, c) => {
@@ -97,6 +100,42 @@ const enharmonic = (note) => {
     })
     return note;
 }
+const chordProgressions = {
+    play: (chord, time) => {
+        const notes = Chord.get(chord).notes;
+        const now = Tone.now();
+        notes.forEach((note) => {
+            trigger(document.getElementById(note), 2000)
+        });
+        synth.triggerAttack(notes, time);
+        synth.triggerRelease(notes, now + 2);
+
+
+
+    },
+    scale: ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'],
+    tonic: '',
+    /*   pattern: (numerals) => {
+           numerals.forEach((num) => {
+               console.log(Chord.getChord(RomanNumeral.get('num').chordType));
+
+           })
+       }, */
+    progression: {
+        Cirle: () => {
+            // implement being able to change the tonic
+            const chords = ['C4 major', 'F4 major', 'B4 dim', 'E4m', 'A4m', 'D4m', 'G4 major', 'C4 major']
+            for (let i = 0; i < chords.length; i++) {
+                setTimeout(() => chordProgressions.play(chords[i]), 2000 * i);
+            }
+
+        },
+        /*   Fiftys: () => {
+               const romans = ['I', 'vi', 'IV', 'V'];
+               const chords = ['C4 major', 'A4 minor', '']
+           } */
+    }
+}
 const scales = {
     tonic: '',
     pattern: (type, iterations) => {
@@ -114,8 +153,9 @@ const scales = {
     prompt: () => {
         while (true) {
             let options = scales.chromatic.join(', ');
-            scales.tonic = prompt(`${options}\nWhat is the tonic?`);
+            scales.tonic = prompt(`${options}\nWhat is the tonic?`).toUpperCase();
             if (scales.chromatic.includes(scales.tonic)) {
+                Tone.start();
                 break;
             } else {
                 alert("Pick a note belonging to the chromatic scale");
@@ -156,6 +196,22 @@ const scales = {
             scales.prompt();
             scales.pattern("dorian", 8);
         },
+        Phrygian: () => {
+            scales.prompt();
+            scales.pattern("phrygian", 8);
+        },
+        Lydian: () => {
+            scales.prompt();
+            scales.pattern("lydian", 8);
+        },
+        Locrian: () => {
+            scales.prompt();
+            scales.pattern("locrian", 8);
+        },
+        Mixolydian: () => {
+            scales.prompt();
+            scales.pattern("mixolydian", 8)
+        },
         Arabian: () => {
             scales.prompt();
             scales.pattern("arabian", 8);
@@ -187,6 +243,38 @@ const scales = {
             scales.pattern("ionian pentatonic", 6);
         }
     },
+    octatonicScales: {
+        Bebop: () => {
+            scales.prompt();
+            scales.pattern("bebop", 9)
+        },
+        BebopMajor: () => {
+            scales.prompt();
+            scales.pattern("bebop major", 9)
+        },
+        BebopMinor: () => {
+            scales.prompt();
+            scales.pattern("bebop minor", 9);
+        },
+        PurviRaga: () => {
+            scales.prompt();
+            scales.pattern("purvi raga", 9);
+        },
+        Ichikosucho: () => {
+            scales.prompt();
+            scales.pattern("ichikosucho", 9);
+        },
+        KafiRagi: () => {
+            scales.prompt();
+            scales.pattern("kafi raga", 9)
+        }
+    },
+    chromaticScales: {
+        Chromatic: () => {
+            scales.prompt();
+            scales.pattern("chromatic", 13);
+        }
+    }
 }
 const majorChords = (() => {
 
@@ -260,7 +348,7 @@ const minorChords = (() => {
     const chords = [];
     chromatic.forEach((root) => {
         chords.push(Chord.getChord("minor", root)["notes"].map((el) => enharmonic(el)));
-    
+
     })
     const minorC = chordFactory(...chords[0]).chord;
     const minorCs = chordFactory(...chords[1]).chord;
@@ -327,6 +415,10 @@ const buttons = {
         buttonFactory("hMinorH", scales.hepatonicScales.Harmonic);
         buttonFactory("melodicMinorH", scales.hepatonicScales.Melodic);
         buttonFactory("dorian", scales.hepatonicScales.Dorian);
+        buttonFactory("phrygian", scales.hepatonicScales.Phrygian);
+        buttonFactory("lydian", scales.hepatonicScales.Lydian);
+        buttonFactory("locrian", scales.hepatonicScales.Locrian);
+        buttonFactory("mixolydian", scales.hepatonicScales.Mixolydian);
         buttonFactory("arabian", scales.hepatonicScales.Arabian);
     })(),
     pentatonic: (() => {
@@ -336,5 +428,19 @@ const buttons = {
         buttonFactory("indian", scales.pentatonicScales.Indian);
         buttonFactory("ritusen", scales.pentatonicScales.Ritusen);
         buttonFactory("ionian", scales.pentatonicScales.Ionian)
+    })(),
+    octatonic: (() => {
+        buttonFactory("bebop", scales.octatonicScales.Bebop);
+        buttonFactory("bebopMajor", scales.octatonicScales.BebopMajor);
+        buttonFactory("bebopMinor", scales.octatonicScales.BebopMinor);
+        buttonFactory("purviRaga", scales.octatonicScales.PurviRaga);
+        buttonFactory("ichikosucho", scales.octatonicScales.Ichikosucho);
+        buttonFactory("kafiRaga", scales.octatonicScales.KafiRagi);
+    })(),
+    chromatic: (() => {
+        buttonFactory("chromatic", scales.chromaticScales.Chromatic);
+    })(),
+    progressions: (() => {
+        buttonFactory("circle", chordProgressions.progression.Cirle);
     })()
 }
