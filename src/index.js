@@ -102,15 +102,16 @@ const enharmonic = (note) => {
 }
 const chordProgressions = {
     play: (chord, time) => {
-        const notes = Chord.get(chord).notes;
+        const notes = chord.notes;
+        if (time == undefined) {
+            time = 0;
+        }
         const now = Tone.now();
-        notes.forEach((note) => {
+        notes.map((note) => enharmonic(note)).forEach((note) => {
             trigger(document.getElementById(note), 2000)
         });
         synth.triggerAttack(notes, time);
         synth.triggerRelease(notes, now + 2);
-
-
 
     },
     scale: ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'],
@@ -121,19 +122,35 @@ const chordProgressions = {
 
            })
        }, */
-    progression: {
-        Cirle: () => {
+    progressions: {
+        Circle: () => {
             // implement being able to change the tonic
             const chords = ['C4 major', 'F4 major', 'B4 dim', 'E4m', 'A4m', 'D4m', 'G4 major', 'C4 major']
             for (let i = 0; i < chords.length; i++) {
-                setTimeout(() => chordProgressions.play(chords[i]), 2000 * i);
+                
+                setTimeout(() => chordProgressions.play(Chord.get(chords[i])), 2000 * i);
             }
 
         },
-        /*   Fiftys: () => {
-               const romans = ['I', 'vi', 'IV', 'V'];
-               const chords = ['C4 major', 'A4 minor', '']
-           } */
+        Fiftys: () => {
+            const romans = ['I', 'vi', 'IV', 'V'];
+            const chords = ['C4 major', 'A4 minor', 'F4 major', 'G4 major'];
+            for (let i = 0; i < chords.length; i++) {
+                setTimeout(() => chordProgressions.play(Chord.get(chords[i])), 2000 * i);
+            }
+        },
+        TwoFiveOne: () => {
+            const chords = ['D4 minor', 'G4 major', 'C4 major'];
+            for (let i = 0; i < chords.length; i++) {
+                setTimeout(() => chordProgressions.play(Chord.get(chords[i])), 2000 * i);
+            }
+        },
+        OneFiveSixFour: () => {
+            const chords = ['C4 major', 'G4 major', 'A4 minor', 'F4 major'];
+            for (let i = 0; i < chords.length; i++) {
+                setTimeout(() => chordProgressions.play(Chord.get(chords[i])), 2000 * i);
+            }
+        }
     }
 }
 const scales = {
@@ -377,7 +394,59 @@ const minorChords = (() => {
         minorB
     };
 })();
+const sevenths = {
+    play: (chord, time) => {
+        if (time == undefined) {
+            time = 0;
+        }
+        const notes = chord.notes;
+        const now = Tone.now();
+        notes.map((note) => enharmonic(note)).forEach((note) => {
+            trigger(document.getElementById(note), 2000)
+        });
+        synth.triggerAttack(notes, time);
+        synth.triggerRelease(notes, now + 2);
 
+    },
+    tonic: '',
+    prompt: () => {
+        while (true) {
+            let options = scales.chromatic.join(', ');
+            sevenths.tonic = prompt(`${options}\nWhat is the first note of the chord?`).toUpperCase();
+            if (scales.chromatic.includes(sevenths.tonic)) {
+                Tone.start();
+                sevenths.tonic += '4';
+                break;
+            } else {
+                alert("Pick a note belonging to the chromatic scale");
+                break;
+            }
+        }
+    },
+    chords: {
+        Dominant: () => {
+            sevenths.prompt();
+            sevenths.play(Chord.get(sevenths.tonic + "dom"));
+        },
+        Major: () => {
+            sevenths.prompt();
+            sevenths.play(Chord.get(sevenths.tonic + "maj7"));
+        },
+        Minor: () => {
+            sevenths.prompt();
+            sevenths.play(Chord.get(sevenths.tonic + "min7"));
+        },
+        HalfDim: () => {
+            sevenths.prompt();
+            sevenths.play(Chord.get(sevenths.tonic + "half-diminished"));
+        },
+        Dim: () => {
+            sevenths.prompt();
+            sevenths.play(Chord.get(sevenths.tonic + "diminished"));
+
+        }
+    }
+}
 const minorChordButtons = (() => {
     const minorC = buttonFactory("minorC", minorChords.minorC);
     const minorCs = buttonFactory("minorCs", minorChords.minorCs);
@@ -441,6 +510,16 @@ const buttons = {
         buttonFactory("chromatic", scales.chromaticScales.Chromatic);
     })(),
     progressions: (() => {
-        buttonFactory("circle", chordProgressions.progression.Cirle);
+        buttonFactory("circle", chordProgressions.progressions.Circle);
+        buttonFactory("50s", chordProgressions.progressions.Fiftys);
+        buttonFactory("251", chordProgressions.progressions.TwoFiveOne);
+        buttonFactory("1564", chordProgressions.progressions.OneFiveSixFour);
+    })(),
+    sevenths: (() => {
+        buttonFactory("dominant7th", sevenths.chords.Dominant);
+        buttonFactory("major7th", sevenths.chords.Major);
+        buttonFactory("minor7th", sevenths.chords.Minor);
+        buttonFactory("halfDim7th", sevenths.chords.HalfDim);
+        buttonFactory("dim7th", sevenths.chords.Dim);
     })()
 }

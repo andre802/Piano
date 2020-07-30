@@ -71,7 +71,8 @@ li[class^='w']:hover, li[class^='w']:active {
 .hepatonicScales,
 .octatonicScales,
 .chromaticScale,
-.progressions {
+.progressions,
+.sevenths {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,7 +82,8 @@ li[class^='w']:hover, li[class^='w']:active {
 .pentatonicScales .buttons,
 .hepatonicScales .buttons,
 .octatonicScales .buttons,
-.progressions.buttons {
+.progressions .buttons,
+.sevenths .buttons {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;

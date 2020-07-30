@@ -13,8 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "@tonaljs/tonal": "^4.1.0",
-    "tone": "^14.7.35",
-    "webpack": "^4.44.0",
+    "tone": "^14.7.39",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   }
 }

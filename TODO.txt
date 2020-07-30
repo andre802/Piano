@@ -5,7 +5,6 @@ TODO:
 -allow holding of a keyboard key simulate holding a piano key
 -generate HTML dynamically
 -show modal demonstrating how keyboard equates to piano keys
--add 7ths
 -add comments
 -chord progressions
 -roman numeral use
@@ -19,3 +18,5 @@ making a function of the scales object with type and
  number of iterations as args
  -add title attributes to buttons
 -modes 
+-add 7ths
+
