@@ -1,8 +1,6 @@
 import * as Tone from 'tone';
 import {
-    Scale,
     Note,
-    Chord,
 } from "@tonaljs/tonal";
 
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
@@ -70,11 +68,11 @@ const trigger = (...el) => {
     }, el[el.length - 1] - 100);
 
 };
-
+// Calling Note enharmonic if note contains special case
 const enharmonic = (note) => {
     const toChange = ['b', 'E#', '##', 'B#'];
     toChange.forEach((value) => {
-        if (note.includes(value)) {
+        if (note.indexOf(value) != -1) {
             note = Note.enharmonic(note);
             return note;
         }

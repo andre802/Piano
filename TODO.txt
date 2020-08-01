@@ -2,7 +2,6 @@ TODO:
 -Show note names of the scale being played
 -allow holding of a keyboard key simulate holding a piano key
 -generate HTML dynamically
--clean up modules and make button file
 -show modal demonstrating how keyboard equates to piano keys
 -add comments
 -chord progressions
@@ -20,6 +19,8 @@ making a function of the scales object with type and
 -add 7ths
 -split Javascript into modules!!!
 -add styling to keys and piano (hover, press)
+-clean up modules and make button file
+
 
 
 

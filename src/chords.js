@@ -6,12 +6,9 @@ import {
     synth,
     trigger,
     enharmonic,
-    buttonFactory,
     chromatic
 } from './index'
-import {
-    scales
-} from './scales';
+
 
 const chordFactory = (a, b, c) => {
     const chord = () => {
@@ -120,34 +117,6 @@ const majorChords = (() => {
 })();
 
 
-const majorChordButtons = (() => {
-    const majorC = buttonFactory("majorC", majorChords.majorC);
-    const majorCs = buttonFactory("majorCs", majorChords.majorCs);
-    const majorD = buttonFactory("majorD", majorChords.majorD);
-    const majorDs = buttonFactory("majorDs", majorChords.majorDs);
-    const majorE = buttonFactory("majorE", majorChords.majorE);
-    const majorF = buttonFactory("majorF", majorChords.majorF);
-    const majorFs = buttonFactory("majorFs", majorChords.majorFs);
-    const majorG = buttonFactory("majorG", majorChords.majorG);
-    const majorGs = buttonFactory("majorGs", majorChords.majorGs);
-    const majorA = buttonFactory("majorA", majorChords.majorA);
-    const majorAs = buttonFactory("majorAs", majorChords.majorAs);
-    const majorB = buttonFactory("majorB", majorChords.majorB);
-    return {
-        majorC,
-        majorCs,
-        majorD,
-        majorDs,
-        majorE,
-        majorF,
-        majorFs,
-        majorG,
-        majorGs,
-        majorA,
-        majorAs,
-        majorB
-    };
-})();
 
 const minorChords = (() => {
     const chromatic = ['C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4'];
@@ -236,35 +205,11 @@ const sevenths = {
         }
     }
 }
-const minorChordButtons = (() => {
-    const minorC = buttonFactory("minorC", minorChords.minorC);
-    const minorCs = buttonFactory("minorCs", minorChords.minorCs);
-    const minorD = buttonFactory("minorD", minorChords.minorD);
-    const minorDs = buttonFactory("minorDs", minorChords.minorDs);
-    const minorE = buttonFactory("minorE", minorChords.minorE);
-    const minorF = buttonFactory("minorF", minorChords.minorF);
-    const minorFs = buttonFactory("minorFs", minorChords.minorFs);
-    const minorG = buttonFactory("minorG", minorChords.minorG);
-    const minorGs = buttonFactory("minorGs", minorChords.minorGs);
-    const minorA = buttonFactory("minorA", minorChords.minorA);
-    const minorAs = buttonFactory("minorAs", minorChords.minorAs);
-    const minorB = buttonFactory("minorB", minorChords.minorB);
-    return {
-        minorC,
-        minorCs,
-        minorD,
-        minorDs,
-        minorE,
-        minorF,
-        minorFs,
-        minorG,
-        minorGs,
-        minorA,
-        minorAs,
-        minorB
-    };
-})();
+
 export {
     chordProgressions,
-    sevenths
+    sevenths,
+    minorChords,
+    majorChords
+
 }

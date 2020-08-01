@@ -5,7 +5,8 @@ module.exports = {
   entry: {
       index: './src/index.js',
       scales: './src/scales.js',
-      chords: './src/chords.js'
+      chords: './src/chords.js',
+      buttons: './src/buttons.js'
   },
   output: {
     filename: '[name].bundle.js',
