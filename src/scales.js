@@ -6,7 +6,8 @@ import {
     synth,
     trigger,
     enharmonic,
-    chromatic
+    chromatic,
+    display
 } from "./index"
 const scales = {
     tonic: '',
@@ -14,6 +15,7 @@ const scales = {
         let notes = Scale.get(`${scales.tonic}4 ${type}`)['notes'];
         notes.push(`${scales.tonic}5`);
         notes = notes.map((note) => enharmonic(note));
+        display.innerText = notes.join(', ');
         const pattern = new Tone.Pattern((time, note) => {
             trigger(document.getElementById(note), 500);
             synth.triggerAttackRelease(note, .25, time);

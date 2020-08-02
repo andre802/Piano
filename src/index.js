@@ -4,7 +4,8 @@ import {
 } from "@tonaljs/tonal";
 
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-const octave = document.getElementsByClassName("octave")[0];
+const pianoKeys = document.getElementsByTagName("li");
+const display = document.getElementById('display');
 const chromatic = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 const keys = {
     a: "C4",
@@ -33,10 +34,11 @@ const keys = {
     b: "B5",
     n: "C6"
 };
-for (let i = 0; i < octave.children.length; i++) {
-    octave.children[i].addEventListener("click", (e) => {
-        synth.triggerAttackRelease(e.srcElement.id, "8n");
-        let key = document.getElementById(e.srcElement.id);
+for (let i = 0; i < pianoKeys.length; i++) {
+    pianoKeys[i].addEventListener("click", (e) => {
+        synth.triggerAttackRelease(e.target.id, "8n");
+        let key = document.getElementById(e.target.id);
+        display.innerText = e.target.id;
         trigger(key, 300)
     })
 }
@@ -45,6 +47,7 @@ window.addEventListener("keypress", (e) => {
     if (e.key in keys) {
         synth.triggerAttackRelease(keys[e.key], "8n");
         let key = document.getElementById(keys[e.key]);
+        display.innerText = keys[e.key];
         trigger(key, 300);
     }
 });
@@ -63,7 +66,7 @@ const trigger = (...el) => {
         if (e.classList.contains("w")) {
             e.style.background = "linear-gradient(#E8F1F2, #FFFFFD)"
         } else {
-            e.style.background = "black";
+            e.style.background = "#140009";
         }
     }, el[el.length - 1] - 100);
 
@@ -89,5 +92,6 @@ export {
     trigger,
     enharmonic,
     buttonFactory,
-    chromatic
+    chromatic,
+    display
 };

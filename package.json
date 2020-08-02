@@ -1,9 +1,9 @@
 {
-  "name": "piano",
+  "name": "synth",
   "version": "1.0.0",
-  "description": "",
+  "description": "synthesizer made using tonal and tone libraries",
   "private": true,
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx webpack --config webpack.config.js"

@@ -7,6 +7,9 @@ TODO:
 -chord progressions
 -roman numeral use
 -add stop button
+-clean up scales and buttons
+-clean up chords and index
+-add css loader
 
 DONE:
 -Add sharp and flats for chords

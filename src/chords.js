@@ -6,12 +6,14 @@ import {
     synth,
     trigger,
     enharmonic,
-    chromatic
+    chromatic,
+    display
 } from './index'
 
 
 const chordFactory = (a, b, c) => {
     const chord = () => {
+        display.innerText = a + ', ' + b + ', ' + c;
         const now = Tone.now();
         synth.triggerAttack(a, now);
         synth.triggerAttack(b, now + 0.5);
@@ -35,6 +37,7 @@ const chordProgressions = {
         notes.map((note) => enharmonic(note)).forEach((note) => {
             trigger(document.getElementById(note), 2000)
         });
+        display.innerText = notes.join(', ');
         synth.triggerAttack(notes, time);
         synth.triggerRelease(notes, now + 2);
 
@@ -159,6 +162,7 @@ const sevenths = {
         }
         const notes = chord.notes;
         const now = Tone.now();
+        display.innerText = notes.join(', ');
         notes.map((note) => enharmonic(note)).forEach((note) => {
             trigger(document.getElementById(note), 2000)
         });
