@@ -163,17 +163,26 @@ window.addEventListener("keyup", (e) => {
  * to an empty string to follow stylesheet rules.
  */
 const trigger = (...el) => {
-    const pressed = "#DBD4D2";
+    const pressedBlack = "#DBD4D2";
+    const pressedWhite = "maroon";
     let e = el[0];
     // not working consistently with chord progressions
     if (el.length == 1) {
         if (e.style.background == '') {
-            e.style.background = pressed;
+            if (e.classList.contains('w')) {
+                e.style.background = pressedWhite;
+            } else {
+                e.style.background = pressedBlack;
+            }
         } else {
             e.style.background = '';
         }
     } else {
-        e.style.background = pressed;
+        if (e.classList.contains('w')) {
+            e.style.background = pressedWhite;
+        } else {
+            e.style.background = pressedBlack;
+        }
         setTimeout(() => {
             e.style.background = '';
         }, el[el.length - 1] - 100);
@@ -191,16 +200,11 @@ const enharmonic = (note) => {
     })
     return note;
 }
-const buttonFactory = (btnId, chord) => {
-    const button = document.getElementById(btnId);
-    button.addEventListener("click", () => chord());
-}
 
 export {
     synth,
     trigger,
     enharmonic,
-    buttonFactory,
     chromatic,
     display
 };

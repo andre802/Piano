@@ -2,12 +2,12 @@ TODO:
 -generate HTML dynamically
 -show modal demonstrating how keyboard equates to piano keys
 -add comments
--chord progressions
 -roman numeral use
 -add stop button
--clean up scales and buttons
 -clean up chords and index
 -add css loader
+-make display module
+-make chord progression tonic variable
 
 DONE:
 -Add sharp and flats for chords
@@ -23,6 +23,8 @@ making a function of the scales object with type and
 -clean up modules and make button file
 -Show note names of the scale being played
 -allow holding of a keyboard key simulate holding a piano key
+-chord progressions
+-clean up scales and buttons
 
 
 

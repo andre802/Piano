@@ -12,15 +12,21 @@ import {
 const scales = {
     tonic: '',
     pattern: (type, iterations) => {
+        // Using Scale method get to get a Scale object then accessing notes property, a list
         let notes = Scale.get(`${scales.tonic}4 ${type}`)['notes'];
+        // Adding tonic one octave above
         notes.push(`${scales.tonic}5`);
-        notes = notes.map((note) => enharmonic(note));
+
         display.innerText = notes.join(', ');
+
+        notes = notes.map((note) => enharmonic(note));
+
         const pattern = new Tone.Pattern((time, note) => {
             trigger(document.getElementById(note), 500);
             synth.triggerAttackRelease(note, .25, time);
         }, notes);
         pattern.iterations = iterations;
+
         pattern.start();
         Tone.Transport.start();
     },
@@ -36,8 +42,6 @@ const scales = {
             }
         }
     },
-    // Changes few troubles case (in toChange array) to their enharmonic for smoother operations
-
     hepatonicScales: {
         Major: () => {
             scales.prompt();
