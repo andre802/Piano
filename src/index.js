@@ -1,3 +1,4 @@
+import './style.css';
 import * as Tone from 'tone';
 import {
     Note,
@@ -105,7 +106,7 @@ const keys = {
         triggered: false
     },
     n: {
-        note: "G5",
+        note: "C6",
         triggered: false
     },
 };

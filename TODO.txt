@@ -8,6 +8,7 @@ TODO:
 -add css loader
 -make display module
 -make chord progression tonic variable
+-add fancier display of buttons
 
 DONE:
 -Add sharp and flats for chords

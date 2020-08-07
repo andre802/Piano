@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-   mode: 'development',
+  mode: 'development',
   entry: {
       index: './src/index.js',
       scales: './src/scales.js',
@@ -12,4 +12,21 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [ // specify style before css
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.ttf$/,
+        use: [
+          'file-loader'
+        ]
+      }
+    ]
+  }
 };

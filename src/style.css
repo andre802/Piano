@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('./PlayfairDisplay-Medium.ttf') format('ttf');
+  font-style: medium;
+  font-weight: 800px;
+}
+* {
+  font-family: 'Playfair Display';
+}
 body {
   background-color: #04395E;
   width: 100%;
@@ -144,15 +153,15 @@ button:hover {
   margin-right: 10px;
 }
 
-@media (min-width: 800px) {
+@media (max-width: 800px) {
   section {
-    display: flex;
+    display: none;
   }
 
   /* TODO: add higher and lower octave sections to have no display until a request */
 }
 
-@media (max-width: 600px) {
+@media (max-width: 420px) {
  
   section {
     display: none;
@@ -174,8 +183,7 @@ button:hover {
   }
 
   ul {
-    min-width: 250px;
-    max-width: 50%;
+    max-width: 90%;
     padding: 5%;
   }
 
