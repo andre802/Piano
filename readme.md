@@ -5,5 +5,4 @@ Install dependencies with 'npm install' in command line, which will generate the
 Run with 'npm run build' open in browser.
 
 You can play the synth using your keyboard or mouse. You can also use the keyboard to brush up on your music theory skills. Choose from a collection of chords, scales, progressions, as well as a tonic, and hear the synth play the appropriate notes as well as dictate the notes played.
-
-![Image of wide screen display](synth1.png?raw=true)
+![Image](synth1.png?raw=true)
